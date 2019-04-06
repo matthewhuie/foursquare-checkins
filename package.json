@@ -1,0 +1,18 @@
+{
+  "name": "foursquare-checkins",
+  "version": "0.0.1",
+  "main": "app.coffee",
+  "scripts": {
+    "start": "coffee app.coffee"
+  },
+  "repository": "github:matthewhuie/foursquare-checkins",
+  "author": "Matthew Huie",
+  "license": "MIT",
+  "dependencies": {
+    "coffeescript": "^2.4.0",
+    "express": "^4.16.4",
+    "ics": "^2.13.2",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.7"
+  }
+}

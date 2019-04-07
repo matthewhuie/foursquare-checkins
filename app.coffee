@@ -14,20 +14,30 @@ app.listen process.env.PORT or 8080
 getCheckins = (token) ->
   total = -1
   checkins = []
-  qs =
-    v: '20190401'
-    oauth_token: token
-    limit: 250
-    offset: 0
+  options =
+    url: 'https://api.foursquare.com/v2/users/self/checkins'
+    qs:
+      v: '20190401'
+      oauth_token: token
+      limit: 250
+      offset: 0
+    json: true
 
+  promises = []
   loop
-    data = await request
-      url: 'https://api.foursquare.com/v2/users/self/checkins'
-      qs: qs
+    if total == -1
+      initial = await request options
+      total = initial.response.checkins.count
+      checkins.push ...initial.response.checkins.items
+    else
+      promises.push request options
 
-    checkins.push ...JSON.parse(data).response.checkins.items
-    total = JSON.parse(data).response.checkins.count if total == -1
-    qs.offset += 250
-    break unless qs.offset < total
+    options.qs.offset += 250
+    break unless options.qs.offset < total
 
-  checkins
+  Promise.all promises
+    .then (values) =>
+      values.forEach (value) =>
+        checkins.push ...value.response.checkins.items
+    .then () ->
+      checkins

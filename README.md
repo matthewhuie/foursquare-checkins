@@ -13,7 +13,15 @@ Returns a JSON array of Foursquare check-ins for the specified user.
 
 **GET /OAUTH_TOKEN/ics**
 
-Returns an iCal-standard (RFC 5545) output of Foursquare check=ins for the specified user.  This output can be imported into calendar apps like Google Calendar.
+Returns an iCal-standard (RFC 5545) output of Foursquare check-ins for the specified user.  This output can be imported into calendar apps like Google Calendar.
+
+## TODO
+- [x] getCheckins via Foursquare API
+- [x] getCheckins using Promises
+- [ ] getCheckins as Express middleware
+- [x] JSON implementation
+- [x] iCal implementation
+- [ ] Memcache support
 
 ## Links
 - https://foursquare.com

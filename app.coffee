@@ -23,7 +23,7 @@ app.get '/:token/ics', (req, res) ->
         uid: checkin.id
         geo:
           lat: checkin.venue.location.lat
-          lng: checkin.venue.location.lng
+          lon: checkin.venue.location.lng
         url: 'https://www.swarmapp.com/checkin/' + checkin.id
 
   res.send cal.toString()

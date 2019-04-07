@@ -1,10 +1,32 @@
 express = require 'express'
+moment = require 'moment'
 request = require 'request-promise-native'
 app = express()
+ical = require 'ical-generator'
 
 app.get '/:token/json', (req, res) ->
   data = await getCheckins req.params.token
   res.json data
+
+app.get '/:token/ics', (req, res) ->
+  cal = ical
+    name: 'Foursquare Check-ins'
+    domain: 'checkins.foursquare.com'
+  data = await getCheckins req.params.token
+  data.forEach (checkin) =>
+    event = if checkin.event? then ' (' + checkin.event.name + ')' else ''
+    if checkin.type == 'checkin' and checkin.venue?
+      cal.createEvent
+        start: moment.unix checkin.createdAt
+        end: moment.unix checkin.createdAt
+        summary: checkin.venue.name || '' + event
+        uid: checkin.id
+        geo:
+          lat: checkin.venue.location.lat
+          lng: checkin.venue.location.lng
+        url: 'https://www.swarmapp.com/checkin/' + checkin.id
+
+  res.send cal.toString()
 
 app.use (req, res) ->
   res.sendStatus 404

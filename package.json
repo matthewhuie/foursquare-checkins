@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "main": "app.coffee",
   "scripts": {
-    "start": "coffee app.coffee"
+    "start": "coffee $npm_package_main",
+    "print": "coffee -p $npm_package_main"
   },
   "repository": "github:matthewhuie/foursquare-checkins",
   "author": "Matthew Huie",
@@ -11,6 +12,8 @@
   "dependencies": {
     "coffeescript": "^2.4.0",
     "express": "^4.16.4",
+    "ical-generator": "^1.6.0",
+    "moment": "^2.24.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7"
   }

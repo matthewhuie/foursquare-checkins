@@ -22,6 +22,8 @@ Returns an iCal-standard (RFC 5545) output of Foursquare check-ins for the speci
 - [x] JSON implementation
 - [x] iCal implementation
 - [ ] Memcache support
+- [ ] Google Cloud Functions (or AWS Lambda) support
+- [ ] Rethink security of using tokens via HTTPS URL
 
 ## Links
 - https://foursquare.com

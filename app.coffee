@@ -31,7 +31,7 @@ app.get '/:token/ics', (req, res) ->
 app.use (req, res) ->
   res.sendStatus 404
 
-app.listen process.env.PORT or 8080
+app.listen process.env.PORT if process.env.PORT? 
 
 getCheckins = (token) ->
   total = -1
@@ -63,3 +63,5 @@ getCheckins = (token) ->
         checkins.push ...value.response.checkins.items
     .then () ->
       checkins
+
+module.exports = app

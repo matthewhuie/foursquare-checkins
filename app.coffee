@@ -31,7 +31,7 @@ app.get '/:token/ics', (req, res) ->
 app.use (req, res) ->
   res.sendStatus 404
 
-app.listen process.env.PORT if process.env.PORT? 
+app.listen process.env.PORT if process.env.PORT? and not module.parent? 
 
 getCheckins = (token) ->
   total = -1

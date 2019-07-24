@@ -26,6 +26,7 @@ app.get '/:token/ics', (req, res) ->
           lon: checkin.venue.location.lng
         url: 'https://www.swarmapp.com/checkin/' + checkin.id
 
+  res.type 'ics'
   res.send cal.toString()
 
 app.use (req, res) ->

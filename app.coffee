@@ -12,6 +12,11 @@ app.get '/:token/ics', (req, res) ->
   cal = ical
     name: 'Foursquare Check-ins'
     domain: 'checkins.foursquare.com'
+    prodId:
+      company: 'matthewhuie.com'
+      product: 'foursquare-checkins'
+    method: 'publish'
+    ttl: 21600
   data = await getCheckins req.params.token
   data.forEach (checkin) =>
     event = if checkin.event? then ' (' + checkin.event.name + ')' else ''

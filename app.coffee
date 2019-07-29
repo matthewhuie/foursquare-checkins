@@ -24,6 +24,10 @@ app.get '/:token/ics', (req, res) ->
 
   data = await getCheckins req.params.token
   data = _.first data, Math.ceil data.length / 100 if req.query.sample?
+  if req.query.years?
+    years = req.query.years.split ','
+    data = _.filter data, (checkin) ->
+      years.includes moment.unix(checkin.createdAt).format('Y')
 
   data.forEach (checkin) =>
     if checkin.type == 'checkin' and checkin.venue?

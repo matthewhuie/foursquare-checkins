@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "coffeescript": "^2.4.0",
+    "compression": "^1.7.4",
     "express": "^4.16.4",
     "ical-generator": "^1.6.0",
     "moment": "^2.24.0",

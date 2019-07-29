@@ -1,8 +1,11 @@
+compression = require 'compression'
 express = require 'express'
 moment = require 'moment'
 request = require 'request-promise-native'
-app = express()
 ical = require 'ical-generator'
+
+app = express()
+app.use compression()
 
 app.get '/:token/json', (req, res) ->
   data = await getCheckins req.params.token

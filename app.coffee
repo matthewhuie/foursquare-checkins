@@ -22,10 +22,10 @@ app.get '/:token/ics', (req, res) ->
     ttl: 21600
   data = await getCheckins req.params.token
   data.forEach (checkin) =>
-    event = if checkin.event? then " (#{checkin.event.name})" else ''
-    name = checkin.venue.name || ''
-    formattedAddress = checkin.venue.location.formattedAddress.join ', ' || ''
     if checkin.type == 'checkin' and checkin.venue?
+      event = if checkin.event? then " (#{checkin.event.name})" else ''
+      name = checkin.venue.name || ''
+      formattedAddress = checkin.venue.location.formattedAddress.join ', ' || ''
       cal.createEvent
         start: moment.unix checkin.createdAt
         end: moment.unix checkin.createdAt

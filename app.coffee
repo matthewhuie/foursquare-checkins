@@ -3,6 +3,7 @@ express = require 'express'
 moment = require 'moment'
 request = require 'request-promise-native'
 ical = require 'ical-generator'
+_ = require 'underscore'
 
 app = express()
 app.use compression()
@@ -20,7 +21,10 @@ app.get '/:token/ics', (req, res) ->
       product: 'foursquare-checkins'
     method: 'publish'
     ttl: 21600
+
   data = await getCheckins req.params.token
+  data = _.first data, Math.ceil data.length / 100 if req.query.sample?
+
   data.forEach (checkin) =>
     if checkin.type == 'checkin' and checkin.venue?
       event = if checkin.event? then " (#{checkin.event.name})" else ''

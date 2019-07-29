@@ -19,16 +19,19 @@ app.get '/:token/ics', (req, res) ->
     ttl: 21600
   data = await getCheckins req.params.token
   data.forEach (checkin) =>
-    event = if checkin.event? then ' (' + checkin.event.name + ')' else ''
+    event = if checkin.event? then " (#{checkin.event.name})" else ''
+    name = checkin.venue.name || ''
+    formattedAddress = checkin.venue.location.formattedAddress.join ', ' || ''
     if checkin.type == 'checkin' and checkin.venue?
       cal.createEvent
         start: moment.unix checkin.createdAt
         end: moment.unix checkin.createdAt
-        summary: checkin.venue.name || '' + event
+        summary: name + event
         uid: checkin.id
         geo:
           lat: checkin.venue.location.lat
           lon: checkin.venue.location.lng
+        location: "#{name}, #{formattedAddress}"
         url: 'https://www.swarmapp.com/checkin/' + checkin.id
 
   res.type 'ics'
@@ -37,7 +40,7 @@ app.get '/:token/ics', (req, res) ->
 app.use (req, res) ->
   res.sendStatus 404
 
-app.listen process.env.PORT if process.env.PORT? and not module.parent? 
+app.listen process.env.PORT if process.env.PORT? and not module.parent?
 
 getCheckins = (token) ->
   total = -1

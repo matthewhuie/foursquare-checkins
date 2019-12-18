@@ -33,7 +33,7 @@ app.get '/:token/ics', (req, res) ->
     if checkin.type == 'checkin' and checkin.venue?
       event = if checkin.event? then " (#{checkin.event.name})" else ''
       name = checkin.venue.name || ''
-      formattedAddress = checkin.venue.location.formattedAddress.join ', ' || ''
+      formattedAddress = if checkin.venue.location.formattedAddress? then checkin.venue.location.formattedAddress.join ', ' else ''
       cal.createEvent
         start: moment.unix checkin.createdAt
         end: moment.unix checkin.createdAt
